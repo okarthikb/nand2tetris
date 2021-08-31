@@ -13,39 +13,44 @@
 
 // Put your code here.
 
-(INIT) 
+(RE)
 	@8192
-	D=A  // D = 8192
-	@i                  
-	M=D  // i = 8192
+	D=A 
+	@pixels
+	M=D
 
 (LOOP)
-	@i
-	M=M-1  // i = i - 1
-	D=M  // D = i
-	@INIT 
-	D;JLT  // if D < 0 goto INIT              
+	@pixels
+	D=M
+	@RE
+	D;JLT
 	@KBD
-	D=M  // D = current key press ASCII
-	@WHITE		        
-	D;JEQ  // if D == 0 goto WHITE
+	D=M
 	@BLACK
-	0;JMP  // else goto BLACK
+	D;JGT
+	@WHITE
+	D;JEQ
 
-(BLACK)             
-	@SCREEN            
-	D=A  // D == address of 1st pixel
-	@i
-	A=D+M  // A = D + i
-	M=-1  // Memory[A] = -1 (black pixels)
-	@LOOP              
-	0;JMP  // goto LOOP
+(BLACK)
+	@pixels
+	D=M
+	@SCREEN
+	A=A+D
+	M=-1
+	@NEXT
+	0;JMP
 
 (WHITE)
-	@SCREEN            
-	D=A                
-	@i        
-	A=D+M              
-	M=0  // Memory[A] = 0 (whiten pixels)  
-	@LOOP           
+	@pixels
+	D=M
+	@SCREEN
+	A=A+D
+	M=0
+	@NEXT
+	0;JMP
+
+(NEXT)
+	@pixels
+	M=M-1
+	@LOOP
 	0;JMP
