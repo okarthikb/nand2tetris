@@ -58,7 +58,7 @@ CHIP CPU {
     Mux16(a=out, b=instruction, sel=sel, out=inA);
     ARegister(in=inA, load=writeA, out=A, out[0..14]=addressM);
     And(a=instruction[15], b=instruction[12], out=argsel);  // made mistake here, corrected
-	Mux16(a=A, b=inM, sel=argsel, out=arg);
+    Mux16(a=A, b=inM, sel=argsel, out=arg);
     ALU(x=D, y=arg, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=outM, out=out, out[0..7]=outf, out[8..15]=outs, zr=zr, ng=ng);
     DRegister(in=out, load=writeD, out=D);
     // null, JGT, JEQ, JGE, JLT, JNE, JLE, JMP
