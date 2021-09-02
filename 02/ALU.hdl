@@ -63,7 +63,7 @@ CHIP ALU {
 	Not16(in=fo, out=nfo);
 	Mux16(a=fo, b=nfo, sel=no, out=out, out[0..7]=of, out[8..15]=os, out[15]=ng);
 	
-    // output zero or not
+    // output zero?
 	Or8Way(in=of, out=orf);
 	Or8Way(in=os, out=ors);
 	Or(a=orf, b=ors, out=nzr);
