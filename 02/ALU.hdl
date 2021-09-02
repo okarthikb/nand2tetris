@@ -45,35 +45,27 @@ CHIP ALU {
     // Put you code here:
 
     // zero x and y?
-    Mux16(a=x, b[0..15]=false, sel=zx, out=xz);
-    Mux16(a=y, b[0..15]=false, sel=zy, out=yz);
+    Mux16(a=x, b=false, sel=zx, out=xz);
+	Mux16(a=y, b=false, sel=zy, out=yz);
 
     // negate x and y?
-    Not16(in=xz, out=nxz);
-    Mux16(a=xz, b=nxz, sel=nx, out=xzn);
-    Not16(in=yz, out=nyz);
-    Mux16(a=yz, b=nyz, sel=ny, out=yzn);
+	Not16(in=xz, out=nxz);
+	Mux16(a=xz, b=nxz, sel=nx, out=xzn);
+	Not16(in=yz, out=nyz);
+	Mux16(a=yz, b=nyz, sel=ny, out=yzn);
 
-    // out = x + y (if f 1) else x & y
-    Add16(a=xzn, b=yzn, out=sum);
-    And16(a=xzn, b=yzn, out=and);
-    Mux16(a=and, b=sum, sel=f, out=fo);
-
-    // negate out?
-    Not16(in=fo, out=nfo);
-
-    // choose
-    Mux16(a=fo, b=nfo, sel=no, out[0..7]=of, out[8..15]=os);
-
-    // out is 0?
-    Or8Way(in=of, out=orf);
-    Or8Way(in=os, out=ors);
-    Or(a=orf, b=ors, out=nzr);
-    Not(in=nzr, out=zr);
-
-    // out is -ve?
-    And16(a[0..15]=true, b[8..15]=os, out[15]=ng);
-
-    // out
-    Or16(a=false, b[0..7]=of, b[8..15]=os, out=out);
+    // and or add?
+	And16(a=xzn, b=yzn, out=and);
+	Add16(a=xzn, b=yzn, out=add);
+	Mux16(a=and, b=add, sel=f, out=fo);
+	
+    // negate the output?
+	Not16(in=fo, out=nfo);
+	Mux16(a=fo, b=nfo, sel=no, out=out, out[0..7]=of, out[8..15]=os, out[15]=ng);
+	
+    // output zero or not
+	Or8Way(in=of, out=orf);
+	Or8Way(in=os, out=ors);
+	Or(a=orf, b=ors, out=nzr);
+	Not(in=nzr, out=zr);
 }
