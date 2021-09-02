@@ -26,7 +26,6 @@
  */
 
 CHIP CPU {
-
     IN  inM[16],         // M value input  (M = contents of RAM[A])
         instruction[16], // Instruction for execution
         reset;           // Signals whether to re-start the current
@@ -67,14 +66,14 @@ CHIP CPU {
     // null, JGT, JEQ, JGE, JLT, JNE, JLE, JMP
     Not(in=zr, out=nzr);  // not zero?
     Not(in=ng, out=nng);  // not negative?
-    And(a=instruction[15], b=instruction[0], out=JGT);  // greater than
     And(a=nng, b=nzr, out=nngnzr);  // not zero and not negative?
-    And(a=JGT, b=nngnzr, out=compa);
-    And(a=instruction[15], b=instruction[1], out=JEQ);  // equal to
-    And(a=JEQ, b=zr, out=compb);
-    And(a=instruction[15], b=instruction[2], out=JLT);  // less than
-    And(a=JLT, b=ng, out=compc);
-    Or(a=compa, b=compb, out=comp);
-    Or(a=compc, b=comp, out=load);  // load PC?
+    And(a=instruction[15], b=instruction[0], out=JGT);  
+    And(a=JGT, b=nngnzr, out=gt);  // greater than
+    And(a=instruction[15], b=instruction[1], out=JEQ);
+    And(a=JEQ, b=zr, out=eq);  // equal to
+    And(a=instruction[15], b=instruction[2], out=JLT);
+    And(a=JLT, b=ng, out=lt);  // less than
+    Or(a=gt, b=eq, out=comp);  // greater than or equal to
+    Or(a=comp, b=lt, out=load);  // greater than or equal to or less than, load PC?
     PC(in=A, load=load, inc=true, reset=reset, out[0..14]=pc);  // input PC
 }
