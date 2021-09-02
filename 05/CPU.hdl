@@ -64,15 +64,15 @@ CHIP CPU {
     // null, JGT, JEQ, JGE, JLT, JNE, JLE, JMP
     And(a=instruction[15], b=instruction[3], out=writeM);
     Not(in=zr, out=nzr);
-	Not(in=ng, out=nng);
-	And(a=instruction[15], b=instruction[0], out=JGT);
-	And(a=nng, b=nzr, out=nngnzr);
-	And(a=JGT, b=nngnzr, out=compa);
-	And(a=instruction[15], b=instruction[1], out=JEQ);
-	And(a=JEQ, b=zr, out=compb);
-	And(a=instruction[15], b=instruction[2], out=JLT);
-	And(a=JLT, b=ng, out=compc);
-	Or(a=compa, b=compb, out=comp);
-	Or(a=compc, b=comp, out=load);
-	PC(in=A, load=load, inc=true, reset=reset, out[0..14]=pc);
+    Not(in=ng, out=nng);
+    And(a=instruction[15], b=instruction[0], out=JGT);
+    And(a=nng, b=nzr, out=nngnzr);
+    And(a=JGT, b=nngnzr, out=compa);
+    And(a=instruction[15], b=instruction[1], out=JEQ);
+    And(a=JEQ, b=zr, out=compb);
+    And(a=instruction[15], b=instruction[2], out=JLT);
+    And(a=JLT, b=ng, out=compc);
+    Or(a=compa, b=compb, out=comp);
+    Or(a=compc, b=comp, out=load);
+    PC(in=A, load=load, inc=true, reset=reset, out[0..14]=pc);
 }
