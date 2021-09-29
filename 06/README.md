@@ -1,6 +1,6 @@
 # Assembler
 
-This is project 06 of nand2tetris, in which we make a simple assembler to conver the Hack assembly language into 16-bit machine code for the Hack architecture. To assemble a .asm file, run the command
+This is project 06 of nand2tetris, in which we make a simple assembler to convert the Hack assembly language into 16-bit machine code for the Hack architecture. To assemble a .asm file, run the command
 
 ```$ python3 path\to\assembler.py 'path\to\input\file.asm' 'path\to\store\output\file.hack'```
 
