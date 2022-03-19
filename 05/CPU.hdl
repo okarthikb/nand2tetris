@@ -62,7 +62,7 @@ CHIP CPU {
     And(a=instruction[15], b=instruction[12], out=argsel);  // selector
     Mux16(a=A, b=inM, sel=argsel, out=arg);  // choose 2nd argument for ALU
     // ALU out
-    ALU(x=D, y=arg, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=outM, out=out, out[0..7]=outf, out[8..15]=outs, zr=zr, ng=ng);
+    ALU(x=D, y=arg, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=outM, out=out, zr=zr, ng=ng);
     // null, JGT, JEQ, JGE, JLT, JNE, JLE, JMP
     Not(in=zr, out=nzr);  // not zero?
     Not(in=ng, out=nng);  // not negative?
