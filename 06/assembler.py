@@ -38,7 +38,7 @@ SYM = {'SCREEN': '0100000000000000', 'KBD': '0110000000000000', 'SP': '000000000
 
 
 def assemble(I):
-    global RAM, L
+    global RAM
     for i in I:
         dcj = i.split(';')
         dc = dcj[0]
