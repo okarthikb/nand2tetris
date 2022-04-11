@@ -66,28 +66,28 @@ def assemble(I):
             outf.write("111" + COMP[c] + DEST[d] + JUMP[j] + "\n")
 
 
-def clean(I):
-    f = []
-    for i in I:
-        if i:
-            if i[0] != "/":
-                i = i.split("//")[0]
-                for j in range(len(i) - 1, -1, -1):
-                    if i[j] != " ":
+def clean(ls):
+    I = []
+    for l in ls:
+        if l:
+            for i, ch in enumerate(l):
+                if ch != " ":
+                    break
+            l = l[i:]
+            if l[0] != "/":
+                l = l.split("//")[0]
+                for j, ch in enumerate(reversed(l)):
+                    if ch != " ":
                         break
-                i = i[:j + 1]
-                for j in range(len(i)):
-                    if i[j] != " ":
-                        break
-                i = i[j:]
-                if i[0] == "(":
-                    v = i[1:-1]
+                l = l[:len(l) - j]
+                if l[0] == "(":
+                    v = l[1:-1]
                     if v not in SYM:
-                        a = bin(int(len(f)))[2:]
+                        a = bin(int(len(I)))[2:]
                         SYM[v] = "0" * (16 - len(a)) + a
                     continue
-                f.append(i)
-    return f
+                I.append(l)
+    return I
 
 
 assemble(clean(inpf.read().split("\n")))
